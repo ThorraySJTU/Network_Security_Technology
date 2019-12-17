@@ -5,13 +5,13 @@ do
 		break
     elif [ "$operation" = "Block" ];then
 	read -p "Please input website:" website
-	echo "$website has blocked"
+	echo "$website has been blocked"
 	iptables -A OUTPUT -d $website -j DROP
 	echo "$website" >> block_file.txt
 	
     elif [ "$operation" = "Unblock" ];then
 	read -p "Please input website:" website
-	echo "$website has unblocked"
+	echo "$website has been unblocked"
         if [ `grep -c $website block_file.txt` -eq 0 ];then
 	    echo "$website not have"
 	else
@@ -19,6 +19,7 @@ do
        	    sed -i '/'"$website"'/d' block_file.txt
 	fi
     elif [ "$operation" = "Read" ];then
+    	echo "The following websites are blocked:\n"
 	cat block_file.txt | while read line
 	do
     	    echo $line
